@@ -4,17 +4,18 @@ import Footer from "@/components/Footer";
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { CarLocation } from "@/types/parking";
-import { Car, Navigation, Compass, MapPin, Send, Route } from 'lucide-react';
+import { Car, Navigation, Compass, MapPin, Send, Route, XCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 const FindVehiclePage = () => {
   const [carLocation, setCarLocation] = useState<CarLocation>(null);
   const [isLocating, setIsLocating] = useState(false);
   const [navigationStarted, setNavigationStarted] = useState(false);
+  const navigate = useNavigate();
   
-  // Mock function to simulate retrieving the car location
+  // Retrieve the car location from localStorage
   useEffect(() => {
-    // In a real app, this would come from a server or local storage
     const savedLocation = localStorage.getItem('carLocation');
     if (savedLocation) {
       setCarLocation(JSON.parse(savedLocation));
@@ -26,19 +27,26 @@ const FindVehiclePage = () => {
     
     // Simulate car location retrieval
     setTimeout(() => {
-      // This would be a stored value in a real app
-      const mockCarLocation = {
-        spotId: "A15",
-        level: 1
-      };
+      if (!carLocation) {
+        // If no saved location, use mock data
+        const mockCarLocation = {
+          spotId: "A15",
+          level: 1
+        };
+        
+        setCarLocation(mockCarLocation);
+        localStorage.setItem('carLocation', JSON.stringify(mockCarLocation));
+        
+        toast.success("Vehicle located successfully!", {
+          description: `Your car is parked at Level ${mockCarLocation.level}, Space ${mockCarLocation.spotId}`,
+        });
+      } else {
+        toast.success("Vehicle location retrieved!", {
+          description: `Your car is at Level ${carLocation.level}, Space ${carLocation.spotId}`,
+        });
+      }
       
-      setCarLocation(mockCarLocation);
-      localStorage.setItem('carLocation', JSON.stringify(mockCarLocation));
       setIsLocating(false);
-      
-      toast.success("Vehicle located successfully!", {
-        description: `Your car is parked at Level ${mockCarLocation.level}, Space ${mockCarLocation.spotId}`,
-      });
     }, 2000);
   };
   
@@ -70,6 +78,20 @@ const FindVehiclePage = () => {
       description: "If your vehicle supports this feature, the horn will sound briefly",
       duration: 3000,
     });
+  };
+  
+  const handleCancelParking = () => {
+    // Clear the car location
+    localStorage.removeItem('carLocation');
+    setCarLocation(null);
+    setNavigationStarted(false);
+    
+    toast.success("Parking reservation canceled", {
+      description: "Your parking spot has been released",
+    });
+    
+    // Navigate to the parking page
+    navigate('/parking');
   };
   
   return (
@@ -148,14 +170,25 @@ const FindVehiclePage = () => {
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                    <Button 
-                      onClick={navigateToCar}
-                      className="bg-ipark-gold hover:bg-ipark-gold/90 text-ipark-navy flex items-center justify-center gap-2 py-6"
-                    >
-                      <Navigation className="h-6 w-6" />
-                      <span className="font-semibold">Navigate to Vehicle</span>
-                    </Button>
+                  <div className="grid grid-cols-1 gap-4 mb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <Button 
+                        onClick={navigateToCar}
+                        className="bg-ipark-gold hover:bg-ipark-gold/90 text-ipark-navy flex items-center justify-center gap-2 py-6"
+                      >
+                        <Navigation className="h-6 w-6" />
+                        <span className="font-semibold">Navigate to Vehicle</span>
+                      </Button>
+                      
+                      <Button 
+                        variant="destructive"
+                        onClick={handleCancelParking}
+                        className="bg-red-500 hover:bg-red-600 text-white flex items-center justify-center gap-2 py-6"
+                      >
+                        <XCircle className="h-6 w-6" />
+                        <span className="font-semibold">Cancel Parking</span>
+                      </Button>
+                    </div>
                     
                     <div className="grid grid-cols-2 gap-4">
                       <Button 

@@ -7,6 +7,9 @@ import BookingSuccessToast from '@/components/BookingSuccessToast';
 import { generateParkingSpots } from '@/utils/parkingUtils';
 import ParkingCarousel from '@/components/parking/ParkingCarousel';
 import SpotDetails from '@/components/parking/SpotDetails';
+import { Button } from "@/components/ui/button";
+import { XCircle } from "lucide-react";
+import { toast } from "sonner";
 
 const ParkingPage = () => {
   const [parkingSpots, setParkingSpots] = useState<ParkingSpot[]>(generateParkingSpots());
@@ -14,6 +17,7 @@ const ParkingPage = () => {
   const [selectedSpot, setSelectedSpot] = useState<ParkingSpot | null>(null);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [reservedSpotInfo, setReservedSpotInfo] = useState({ spotId: '', level: 0 });
+  const [hasReservation, setHasReservation] = useState(false);
   
   const handleSpotClick = (spot: ParkingSpot) => {
     if (spot.status === 'occupied') return;
@@ -38,6 +42,35 @@ const ParkingPage = () => {
     });
     setShowSuccessToast(true);
     setSelectedSpot(null);
+    setHasReservation(true);
+    
+    // Store the reservation in local storage
+    localStorage.setItem('carLocation', JSON.stringify({
+      spotId: selectedSpot.number,
+      level: selectedSpot.level
+    }));
+  };
+  
+  const handleCancelParking = () => {
+    // Find the reserved spot and make it available again
+    setParkingSpots(prevSpots =>
+      prevSpots.map(spot =>
+        spot.number === reservedSpotInfo.spotId && spot.level === reservedSpotInfo.level
+          ? { ...spot, status: 'available' }
+          : spot
+      )
+    );
+    
+    setHasReservation(false);
+    setReservedSpotInfo({ spotId: '', level: 0 });
+    
+    // Remove the car location from local storage
+    localStorage.removeItem('carLocation');
+    
+    // Show a toast notification
+    toast.success("Parking reservation canceled", {
+      description: "Your parking spot has been released",
+    });
   };
   
   const closeSuccessToast = () => {
@@ -65,6 +98,27 @@ const ParkingPage = () => {
           </div>
           
           <div className="max-w-4xl mx-auto">
+            {hasReservation && (
+              <div className="mb-8 p-4 bg-white rounded-lg border border-ipark-gold/30 shadow-md">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-lg font-medium text-ipark-navy">
+                      Current Reservation: <span className="font-bold">Level {reservedSpotInfo.level}, Spot {reservedSpotInfo.spotId}</span>
+                    </p>
+                    <p className="text-sm text-gray-500">Your vehicle's location has been saved</p>
+                  </div>
+                  <Button 
+                    variant="destructive" 
+                    onClick={handleCancelParking}
+                    className="bg-red-500 hover:bg-red-600 text-white"
+                  >
+                    <XCircle className="mr-2 h-4 w-4" />
+                    Cancel Parking
+                  </Button>
+                </div>
+              </div>
+            )}
+            
             {/* Parking Carousel Component */}
             <ParkingCarousel 
               parkingSpots={parkingSpots} 
