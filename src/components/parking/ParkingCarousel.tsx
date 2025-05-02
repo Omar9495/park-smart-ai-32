@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import ParkingLevelDisplay from "./ParkingLevelDisplay";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 interface ParkingCarouselProps {
   parkingSpots: ParkingSpot[];
@@ -30,6 +31,18 @@ const ParkingCarousel = ({
   const getLevelSpots = (level: number) => {
     return parkingSpots.filter(spot => spot.level === level);
   };
+
+  // Ensure carousel shows the active level
+  useEffect(() => {
+    // This will ensure the appropriate level is shown when activeLevel changes
+    const levelItems = document.querySelectorAll('[data-carousel-level]');
+    levelItems.forEach((item) => {
+      const level = Number(item.getAttribute('data-carousel-level'));
+      if (level === activeLevel) {
+        (item as HTMLElement).click();
+      }
+    });
+  }, [activeLevel]);
   
   return (
     <>
@@ -37,7 +50,7 @@ const ParkingCarousel = ({
         <Carousel className="w-full">
           <CarouselContent>
             {[1, 2, 3, 4].map((level) => (
-              <CarouselItem key={level}>
+              <CarouselItem key={level} data-carousel-level={level}>
                 <ParkingLevelDisplay 
                   level={level} 
                   spots={getLevelSpots(level)} 

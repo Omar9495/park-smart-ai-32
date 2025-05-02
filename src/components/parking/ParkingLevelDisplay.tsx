@@ -16,11 +16,13 @@ const ParkingLevelDisplay = ({
   onSpotClick 
 }: ParkingLevelDisplayProps) => {
   
+  const levelName = level === 1 ? 'A' : level === 2 ? 'B' : level === 3 ? 'C' : 'D';
+  
   return (
     <div className="p-1">
       <div className="bg-white p-6 rounded-lg shadow-lg border border-ipark-gold/20">
         <h3 className="text-xl font-bold mb-6 text-center text-ipark-navy">
-          Level {level} - {String.fromCharCode(64 + level)} Floor
+          Level {level} - {levelName} Floor
         </h3>
         
         <div className="grid grid-cols-4 gap-4">
