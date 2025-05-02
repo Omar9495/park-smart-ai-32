@@ -1,53 +1,43 @@
 
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 const CTASection = () => {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-br from-ipark-navy to-black text-white relative overflow-hidden">
-      {/* Luxury decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-ipark-gold/20 via-ipark-gold to-ipark-gold/20"></div>
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-ipark-gold/20 via-ipark-gold to-ipark-gold/20"></div>
+    <section className="py-16 bg-gradient-to-r from-ipark-navy to-ipark-navy/90 text-white relative overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 w-64 h-64 bg-ipark-gold opacity-5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-ipark-coral opacity-5 rounded-full translate-x-1/3 translate-y-1/3"></div>
       
-      {/* Decorative circles */}
-      <div className="absolute top-10 left-10 w-24 h-24 border border-ipark-gold/20 rounded-full"></div>
-      <div className="absolute bottom-10 right-10 w-32 h-32 border border-ipark-gold/10 rounded-full"></div>
-      
-      <div className="container mx-auto px-4 text-center relative z-10">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 flex flex-col items-center justify-center">
-          <span className="text-ipark-gold mb-2">Elevate</span>
-          <span>Your Parking Experience</span>
-        </h2>
-        <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-          Join the elite community of drivers who have transformed their daily commute with IPark's premium parking management system.
-        </p>
-        
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button 
-            size="lg" 
-            className="bg-ipark-gold text-ipark-navy hover:bg-white text-lg px-6 py-6 border border-ipark-gold shine-effect"
-          >
-            Download the App
-          </Button>
-          <Button 
-            size="lg" 
-            variant="outline" 
-            className="border-ipark-gold text-ipark-gold hover:bg-ipark-gold/10 text-lg px-6 py-6"
-          >
-            Contact Sales <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
-        </div>
-        
-        {/* Luxury badges */}
-        <div className="flex flex-wrap justify-center items-center gap-8 mt-12">
-          <div className="flex items-center bg-black/30 px-4 py-2 rounded-full border border-ipark-gold/20">
-            <span className="text-ipark-gold font-semibold">Premium Service</span>
-          </div>
-          <div className="flex items-center bg-black/30 px-4 py-2 rounded-full border border-ipark-gold/20">
-            <span className="text-ipark-gold font-semibold">24/7 Support</span>
-          </div>
-          <div className="flex items-center bg-black/30 px-4 py-2 rounded-full border border-ipark-gold/20">
-            <span className="text-ipark-gold font-semibold">Valet Options</span>
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            Ready to <span className="text-ipark-gold">Transform</span> Your Parking Experience?
+          </h2>
+          
+          <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+            Join thousands of satisfied drivers who have revolutionized their urban parking experience with IPark's premium smart parking management system.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button 
+              className="bg-ipark-gold hover:bg-ipark-gold/90 text-ipark-navy py-6 px-8 text-lg"
+              asChild
+            >
+              <Link to="/parking">
+                Find Parking Now <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button 
+              variant="outline"
+              className="border-white text-white hover:bg-white/10 py-6 px-8 text-lg"
+              asChild
+            >
+              <Link to="/reviews">
+                Read Customer Reviews
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

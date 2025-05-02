@@ -93,7 +93,7 @@ const CarLocator = ({
               <div>
                 <p className="text-sm text-gray-500">Your car is parked at:</p>
                 <p className="text-lg font-bold text-ipark-navy">
-                  Level {carLocation.level}, Space {carLocation.spotId}
+                  Level {localCarLocation.level}, Space {localCarLocation.spotId}
                 </p>
               </div>
             </div>

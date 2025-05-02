@@ -28,8 +28,8 @@ const Hero = () => {
                 className="bg-ipark-coral hover:bg-ipark-maroon text-white text-lg px-8 py-6"
                 asChild
               >
-                <Link to="/get-started">
-                  Get Started <ArrowRight className="ml-2 h-5 w-5" />
+                <Link to="/parking">
+                  Find Parking <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button 
@@ -37,7 +37,7 @@ const Hero = () => {
                 className="border-ipark-coral text-ipark-coral hover:bg-ipark-coral/5 text-lg px-8 py-6"
                 asChild
               >
-                <Link to="/how-it-works">
+                <Link to="/info">
                   Learn More
                 </Link>
               </Button>

@@ -6,6 +6,8 @@ import { generateParkingSpots } from '@/utils/parkingUtils';
 import CarLocator from './parking/CarLocator';
 import ParkingCarousel from './parking/ParkingCarousel';
 import SpotDetails from './parking/SpotDetails';
+import { Button } from './ui/button';
+import { Link } from 'react-router-dom';
 
 const ParkingDemo = () => {
   const [parkingSpots, setParkingSpots] = useState<ParkingSpot[]>(generateParkingSpots());
@@ -89,6 +91,14 @@ const ParkingDemo = () => {
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Experience our premium parking management system in action. Select available spots to make a reservation.
           </p>
+          
+          <div className="mt-6">
+            <Button className="bg-ipark-coral hover:bg-ipark-maroon text-white" asChild>
+              <Link to="/parking">
+                Go to Full Parking Page
+              </Link>
+            </Button>
+          </div>
         </div>
         
         <div className="max-w-4xl mx-auto">
