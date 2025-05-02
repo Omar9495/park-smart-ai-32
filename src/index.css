@@ -100,7 +100,7 @@
   }
 
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-ipark-coral to-ipark-maroon;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-ipark-gold to-ipark-maroon;
   }
   
   .luxury-card {
@@ -116,10 +116,31 @@
   }
   
   .luxury-button {
-    @apply bg-ipark-coral text-white hover:bg-ipark-maroon transition-colors duration-300;
+    @apply bg-ipark-gold text-ipark-navy hover:bg-ipark-maroon hover:text-white transition-colors duration-300;
   }
   
   .shine-effect {
     @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-shine before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent;
+  }
+  
+  /* New luxury styles */
+  .gold-gradient {
+    @apply bg-gradient-to-r from-ipark-gold/80 via-ipark-gold to-ipark-gold/80;
+  }
+  
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gold-text {
+    @apply text-ipark-gold;
+  }
+  
+  .luxury-shadow {
+    box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.1), 0 8px 10px -6px rgba(212, 175, 55, 0.1);
+  }
+  
+  .gold-outline {
+    @apply ring-1 ring-ipark-gold/30;
   }
 }

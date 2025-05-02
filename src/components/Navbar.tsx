@@ -16,29 +16,27 @@ const Navbar = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
-            <img 
-              src="/lovable-uploads/9d144a19-6e3a-46fd-a0b9-8d2b89f2e86c.png" 
-              alt="IPark Logo" 
-              className="h-12 w-auto mr-2" 
-            />
+            <span className="text-2xl font-bold text-ipark-navy">
+              <span className="text-ipark-gold">I</span>Park
+            </span>
           </Link>
         </div>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8">
-          <Link to="/" className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium">
+          <Link to="/" className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium">
             Home
           </Link>
-          <Link to="/features" className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium">
+          <Link to="/features" className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium">
             Features
           </Link>
-          <Link to="/how-it-works" className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium">
+          <Link to="/how-it-works" className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium">
             How It Works
           </Link>
-          <Link to="/contact" className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium">
+          <Link to="/contact" className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium">
             Contact
           </Link>
-          <Button className="bg-ipark-gold hover:bg-ipark-maroon text-white border border-ipark-gold/50">
+          <Button className="bg-ipark-gold hover:bg-ipark-maroon text-ipark-navy hover:text-white border border-ipark-gold/50">
             Get Started
           </Button>
         </div>
@@ -62,33 +60,33 @@ const Navbar = () => {
           <div className="flex flex-col space-y-4 py-4 px-4">
             <Link 
               to="/" 
-              className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium py-2"
+              className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               Home
             </Link>
             <Link 
               to="/features" 
-              className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium py-2"
+              className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               Features
             </Link>
             <Link 
               to="/how-it-works" 
-              className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium py-2"
+              className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               How It Works
             </Link>
             <Link 
               to="/contact" 
-              className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium py-2"
+              className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               Contact
             </Link>
-            <Button className="bg-ipark-gold hover:bg-ipark-maroon text-white border border-ipark-gold/50">
+            <Button className="bg-ipark-gold hover:bg-ipark-maroon text-ipark-navy hover:text-white border border-ipark-gold/50">
               Get Started
             </Button>
           </div>
