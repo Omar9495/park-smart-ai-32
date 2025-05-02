@@ -4,6 +4,7 @@ export type ParkingSpot = {
   status: 'available' | 'occupied' | 'reserved' | 'accessible';
   level: number;
   number: string;
+  accessible?: boolean; // Adding the accessible property as optional
 };
 
 export type CarLocation = {

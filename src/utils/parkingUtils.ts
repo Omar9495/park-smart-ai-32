@@ -12,10 +12,12 @@ export const generateParkingSpots = (): ParkingSpot[] => {
     for (let i = 1; i <= 12; i++) {
       // Different distribution of spot types for different levels
       let status: 'available' | 'occupied' | 'reserved' | 'accessible';
+      let isAccessible = false;
       
       if (i === 3 || i === 10) {
         // Create some accessible spots
         status = 'accessible';
+        isAccessible = true;
       } else if (level === 3 && i % 3 === 0) {
         // More reserved spots on level 3
         status = 'reserved';
@@ -31,7 +33,8 @@ export const generateParkingSpots = (): ParkingSpot[] => {
         id: `${level}-${i}`,
         status,
         level,
-        number: `${levelPrefix}${i}`
+        number: `${levelPrefix}${i}`,
+        accessible: isAccessible
       });
     }
   }
