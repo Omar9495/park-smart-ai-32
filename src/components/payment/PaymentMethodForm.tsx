@@ -12,13 +12,12 @@ import { toast } from "sonner";
 import { PaymentMethod } from "@/types/payment";
 import { CreditCard } from "lucide-react";
 
-// Define the form schema
+// Define the form schema with less strict validation
 const formSchema = z.object({
   cardName: z.string().min(2, "Name is required"),
   cardNumber: z.string()
-    .min(13, "Card number must be at least 13 digits")
-    .max(19, "Card number cannot exceed 19 digits")
-    .regex(/^[0-9]+$/, "Card number must contain only digits"),
+    .min(4, "Card number required") // Allow any card number with at least 4 digits
+    .regex(/^[0-9\s]*$/, "Card number should only contain digits"),
   expiryMonth: z.string()
     .regex(/^(0[1-9]|1[0-2])$/, "Month must be between 01-12"),
   expiryYear: z.string()
@@ -56,14 +55,17 @@ const PaymentMethodForm = ({ onAddMethod }: PaymentMethodFormProps) => {
   };
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    // Clean up card number by removing spaces
+    const cleanCardNumber = values.cardNumber.replace(/\s/g, "");
+    
     const newMethod: PaymentMethod = {
       id: uuidv4(),
       cardName: values.cardName,
-      lastFourDigits: values.cardNumber.slice(-4),
+      lastFourDigits: cleanCardNumber.slice(-4),
       expiryMonth: values.expiryMonth,
       expiryYear: values.expiryYear,
       isDefault: false,
-      type: getCardType(values.cardNumber),
+      type: getCardType(cleanCardNumber),
     };
 
     onAddMethod(newMethod);
@@ -71,15 +73,16 @@ const PaymentMethodForm = ({ onAddMethod }: PaymentMethodFormProps) => {
     form.reset();
   };
 
-  // Simple card type detection based on first digits
+  // Card type detection based on first digits - but accept any card
   const getCardType = (cardNumber: string): "visa" | "mastercard" | "amex" | "discover" | "other" => {
-    const firstDigits = cardNumber.replace(/\D/g, "").substring(0, 2);
+    const firstDigit = cardNumber.charAt(0);
+    const firstTwoDigits = cardNumber.substring(0, 2);
     
-    if (cardNumber.startsWith("4")) return "visa";
-    if (/^5[1-5]/.test(firstDigits)) return "mastercard";
-    if (/^3[47]/.test(firstDigits)) return "amex";
-    if (/^6011|^65/.test(cardNumber.substring(0, 4))) return "discover";
-    return "other";
+    if (firstDigit === "4") return "visa";
+    if (firstTwoDigits >= "51" && firstTwoDigits <= "55") return "mastercard";
+    if (firstTwoDigits === "34" || firstTwoDigits === "37") return "amex";
+    if (cardNumber.startsWith("6011") || cardNumber.startsWith("65")) return "discover";
+    return "other"; // Accept any other card format
   };
 
   return (
@@ -114,7 +117,7 @@ const PaymentMethodForm = ({ onAddMethod }: PaymentMethodFormProps) => {
                   <FormLabel>Card Number</FormLabel>
                   <FormControl>
                     <Input 
-                      placeholder="1234 5678 9012 3456" 
+                      placeholder="Any card number" 
                       maxLength={19} 
                       {...field} 
                       onChange={(e) => {

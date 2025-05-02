@@ -5,13 +5,23 @@ import PaymentMethodForm from "@/components/payment/PaymentMethodForm";
 import SavedPaymentMethods from "@/components/payment/SavedPaymentMethods";
 import { useState, useEffect } from "react";
 import { PaymentMethod } from "@/types/payment";
+import { useAuth } from "@/contexts/AuthContext";
+import { Navigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const PaymentMethodPage = () => {
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>([]);
+  const { isLoggedIn, userEmail } = useAuth();
+
+  // Redirect to login if not authenticated
+  if (!isLoggedIn) {
+    toast.error("Please log in to access payment methods");
+    return <Navigate to="/login" />;
+  }
 
   // Load saved payment methods from localStorage on component mount
   useEffect(() => {
-    const savedMethods = localStorage.getItem('paymentMethods');
+    const savedMethods = localStorage.getItem(`paymentMethods-${userEmail}`);
     if (savedMethods) {
       try {
         setPaymentMethods(JSON.parse(savedMethods));
@@ -19,18 +29,18 @@ const PaymentMethodPage = () => {
         console.error('Failed to parse payment methods from localStorage', error);
       }
     }
-  }, []);
+  }, [userEmail]);
 
   const addPaymentMethod = (newMethod: PaymentMethod) => {
     const updatedMethods = [...paymentMethods, newMethod];
     setPaymentMethods(updatedMethods);
-    localStorage.setItem('paymentMethods', JSON.stringify(updatedMethods));
+    localStorage.setItem(`paymentMethods-${userEmail}`, JSON.stringify(updatedMethods));
   };
 
   const removePaymentMethod = (id: string) => {
     const updatedMethods = paymentMethods.filter(method => method.id !== id);
     setPaymentMethods(updatedMethods);
-    localStorage.setItem('paymentMethods', JSON.stringify(updatedMethods));
+    localStorage.setItem(`paymentMethods-${userEmail}`, JSON.stringify(updatedMethods));
   };
 
   const setDefaultMethod = (id: string) => {
@@ -39,7 +49,7 @@ const PaymentMethodPage = () => {
       isDefault: method.id === id
     }));
     setPaymentMethods(updatedMethods);
-    localStorage.setItem('paymentMethods', JSON.stringify(updatedMethods));
+    localStorage.setItem(`paymentMethods-${userEmail}`, JSON.stringify(updatedMethods));
   };
 
   return (
@@ -56,6 +66,11 @@ const PaymentMethodPage = () => {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Manage your payment methods for a seamless parking experience
             </p>
+            {userEmail && (
+              <p className="mt-2 text-sm text-gray-500">
+                Logged in as: {userEmail}
+              </p>
+            )}
           </div>
           
           <div className="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-8">
