@@ -1,24 +1,14 @@
 
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, X, Car, Info, Star, MapPin, Search } from "lucide-react";
+import { Menu, X, Car, Info, Star, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Input } from "@/components/ui/input";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
-  };
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      console.log("Searching for:", searchQuery);
-      // Here you would implement actual search functionality
-    }
   };
 
   return (
@@ -30,25 +20,6 @@ const Navbar = () => {
               <span className="text-ipark-gold">I</span>Park
             </span>
           </Link>
-        </div>
-
-        {/* Search Bar - Desktop */}
-        <div className="hidden md:block md:w-1/3">
-          <form onSubmit={handleSearch} className="flex items-center">
-            <Input 
-              type="text" 
-              placeholder="Search parking spots..." 
-              className="rounded-l-md border-r-0"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Button 
-              type="submit" 
-              className="bg-ipark-gold hover:bg-ipark-maroon text-ipark-navy hover:text-white rounded-l-none"
-            >
-              <Search className="h-4 w-4" />
-            </Button>
-          </form>
         </div>
 
         {/* Desktop Menu */}
@@ -99,21 +70,6 @@ const Navbar = () => {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white absolute top-16 left-0 right-0 border-b border-gray-200 shadow-lg">
           <div className="p-4">
-            <form onSubmit={handleSearch} className="flex items-center mb-4">
-              <Input 
-                type="text" 
-                placeholder="Search parking spots..." 
-                className="rounded-l-md border-r-0"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <Button 
-                type="submit" 
-                className="bg-ipark-gold hover:bg-ipark-maroon text-ipark-navy hover:text-white rounded-l-none"
-              >
-                <Search className="h-4 w-4" />
-              </Button>
-            </form>
             <div className="flex flex-col space-y-4">
               <Link 
                 to="/" 
