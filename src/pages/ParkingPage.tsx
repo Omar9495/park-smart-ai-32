@@ -1,7 +1,6 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CarLocation, ParkingSpot } from '@/types/parking';
 import BookingSuccessToast from '@/components/BookingSuccessToast';
 import { generateParkingSpots } from '@/utils/parkingUtils';
@@ -18,6 +17,34 @@ const ParkingPage = () => {
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [reservedSpotInfo, setReservedSpotInfo] = useState({ spotId: '', level: 0 });
   const [hasReservation, setHasReservation] = useState(false);
+  
+  // Load reservation data from localStorage on component mount
+  useEffect(() => {
+    const savedLocation = localStorage.getItem('carLocation');
+    if (savedLocation) {
+      try {
+        const location = JSON.parse(savedLocation);
+        setReservedSpotInfo({
+          spotId: location.spotId,
+          level: location.level
+        });
+        setHasReservation(true);
+        
+        // Update corresponding spot status to reserved
+        setParkingSpots(prevSpots =>
+          prevSpots.map(spot =>
+            (spot.number === location.spotId && spot.level === location.level)
+              ? { ...spot, status: 'reserved' }
+              : spot
+          )
+        );
+        
+        console.log('Loaded reservation from localStorage:', location);
+      } catch (error) {
+        console.error('Failed to parse car location from localStorage', error);
+      }
+    }
+  }, []);
   
   const handleSpotClick = (spot: ParkingSpot) => {
     if (spot.status === 'occupied') return;
@@ -49,6 +76,11 @@ const ParkingPage = () => {
       spotId: selectedSpot.number,
       level: selectedSpot.level
     }));
+    
+    console.log('Saved car location to localStorage:', {
+      spotId: selectedSpot.number,
+      level: selectedSpot.level
+    });
   };
   
   const handleCancelParking = () => {
@@ -71,6 +103,8 @@ const ParkingPage = () => {
     toast.success("Parking reservation canceled", {
       description: "Your parking spot has been released",
     });
+    
+    console.log('Removed car location from localStorage');
   };
   
   const closeSuccessToast = () => {

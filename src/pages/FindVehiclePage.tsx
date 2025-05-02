@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useState, useEffect } from 'react';
@@ -14,40 +13,62 @@ const FindVehiclePage = () => {
   const [navigationStarted, setNavigationStarted] = useState(false);
   const navigate = useNavigate();
   
-  // Retrieve the car location from localStorage
+  // Retrieve the car location from localStorage on component mount
   useEffect(() => {
     const savedLocation = localStorage.getItem('carLocation');
     if (savedLocation) {
-      setCarLocation(JSON.parse(savedLocation));
+      try {
+        const locationData = JSON.parse(savedLocation);
+        console.log('Car location found in localStorage:', locationData);
+        setCarLocation(locationData);
+      } catch (error) {
+        console.error('Error parsing car location from localStorage:', error);
+        toast.error('Error retrieving your car location');
+      }
+    } else {
+      console.log('No car location found in localStorage');
     }
   }, []);
   
   const handleLocateCar = () => {
     setIsLocating(true);
     
-    // Simulate car location retrieval
+    // Check localStorage again in case it was updated
+    const savedLocation = localStorage.getItem('carLocation');
+    
     setTimeout(() => {
-      if (!carLocation) {
-        // If no saved location, use mock data
-        const mockCarLocation = {
-          spotId: "A15",
-          level: 1
-        };
-        
-        setCarLocation(mockCarLocation);
-        localStorage.setItem('carLocation', JSON.stringify(mockCarLocation));
-        
-        toast.success("Vehicle located successfully!", {
-          description: `Your car is parked at Level ${mockCarLocation.level}, Space ${mockCarLocation.spotId}`,
-        });
+      if (savedLocation) {
+        try {
+          const locationData = JSON.parse(savedLocation);
+          setCarLocation(locationData);
+          toast.success("Vehicle located successfully!", {
+            description: `Your car is parked at Level ${locationData.level}, Space ${locationData.spotId}`,
+          });
+        } catch (error) {
+          console.error('Error parsing car location:', error);
+          createMockLocation();
+        }
       } else {
-        toast.success("Vehicle location retrieved!", {
-          description: `Your car is at Level ${carLocation.level}, Space ${carLocation.spotId}`,
-        });
+        // If no saved location, create a mock one
+        createMockLocation();
       }
       
       setIsLocating(false);
     }, 2000);
+  };
+  
+  const createMockLocation = () => {
+    const mockCarLocation = {
+      spotId: "A15",
+      level: 1
+    };
+    
+    setCarLocation(mockCarLocation);
+    localStorage.setItem('carLocation', JSON.stringify(mockCarLocation));
+    
+    toast.success("Vehicle located successfully!", {
+      description: `Your car is parked at Level ${mockCarLocation.level}, Space ${mockCarLocation.spotId}`,
+    });
   };
   
   const navigateToCar = () => {

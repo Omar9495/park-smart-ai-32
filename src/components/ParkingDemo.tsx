@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CarLocation, ParkingSpot } from '@/types/parking';
 import BookingSuccessToast from './BookingSuccessToast';
 import { generateParkingSpots } from '@/utils/parkingUtils';
@@ -15,6 +15,23 @@ const ParkingDemo = () => {
   const [reservedSpotInfo, setReservedSpotInfo] = useState({ spotId: '', level: 0 });
   const [showCarLocator, setShowCarLocator] = useState(false);
   const [carLocation, setCarLocation] = useState<CarLocation>(null);
+  
+  // Load car location from localStorage on component mount
+  useEffect(() => {
+    const savedLocation = localStorage.getItem('carLocation');
+    if (savedLocation) {
+      try {
+        const location = JSON.parse(savedLocation) as CarLocation;
+        setCarLocation(location);
+        setReservedSpotInfo({
+          spotId: location?.spotId || '',
+          level: location?.level || 0
+        });
+      } catch (error) {
+        console.error('Failed to parse car location from localStorage', error);
+      }
+    }
+  }, []);
   
   const handleSpotClick = (spot: ParkingSpot) => {
     if (spot.status === 'occupied') return;
@@ -32,16 +49,21 @@ const ParkingDemo = () => {
       )
     );
     
-    // Show success toast
+    const newCarLocation: CarLocation = {
+      spotId: selectedSpot.number,
+      level: selectedSpot.level
+    };
+    
+    // Save to localStorage
+    localStorage.setItem('carLocation', JSON.stringify(newCarLocation));
+    
+    // Update state
     setReservedSpotInfo({
       spotId: selectedSpot.number,
       level: selectedSpot.level
     });
     setShowSuccessToast(true);
-    setCarLocation({
-      spotId: selectedSpot.number,
-      level: selectedSpot.level
-    });
+    setCarLocation(newCarLocation);
     setSelectedSpot(null);
   };
   
