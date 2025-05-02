@@ -13,6 +13,9 @@ import FindVehiclePage from "./pages/FindVehiclePage";
 import ReviewsPage from "./pages/ReviewsPage";
 import PaymentMethodPage from "./pages/PaymentMethodPage";
 import LoginPage from "./pages/LoginPage";
+import ContactPage from "./pages/ContactPage";
+import FAQPage from "./pages/FAQPage";
+import CookieConsent from "./components/CookieConsent";
 
 const queryClient = new QueryClient();
 
@@ -31,9 +34,12 @@ const App = () => (
             <Route path="/reviews" element={<ReviewsPage />} />
             <Route path="/payment-methods" element={<PaymentMethodPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/faq" element={<FAQPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <CookieConsent />
         </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>

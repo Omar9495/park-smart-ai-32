@@ -49,13 +49,13 @@ const Footer = () => {
                 <Link to="/" className="text-gray-400 hover:text-white transition-colors">Home</Link>
               </li>
               <li>
-                <Link to="/features" className="text-gray-400 hover:text-white transition-colors">Features</Link>
+                <Link to="/info" className="text-gray-400 hover:text-white transition-colors">Information</Link>
               </li>
               <li>
-                <Link to="/how-it-works" className="text-gray-400 hover:text-white transition-colors">How It Works</Link>
+                <Link to="/parking" className="text-gray-400 hover:text-white transition-colors">Find Parking</Link>
               </li>
               <li>
-                <Link to="/pricing" className="text-gray-400 hover:text-white transition-colors">Pricing</Link>
+                <Link to="/find-vehicle" className="text-gray-400 hover:text-white transition-colors">Find Vehicle</Link>
               </li>
               <li>
                 <Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link>
@@ -67,19 +67,19 @@ const Footer = () => {
             <h3 className="font-bold text-lg mb-6">Resources</h3>
             <ul className="space-y-3">
               <li>
-                <Link to="/blog" className="text-gray-400 hover:text-white transition-colors">Blog</Link>
+                <Link to="/faq" className="text-gray-400 hover:text-white transition-colors">FAQ</Link>
               </li>
               <li>
                 <Link to="/support" className="text-gray-400 hover:text-white transition-colors">Support Center</Link>
               </li>
               <li>
-                <Link to="/faq" className="text-gray-400 hover:text-white transition-colors">FAQ</Link>
+                <Link to="/login" className="text-gray-400 hover:text-white transition-colors">My Account</Link>
               </li>
               <li>
-                <Link to="/developers" className="text-gray-400 hover:text-white transition-colors">Developers</Link>
+                <Link to="/payment-methods" className="text-gray-400 hover:text-white transition-colors">Payment Methods</Link>
               </li>
               <li>
-                <Link to="/partnerships" className="text-gray-400 hover:text-white transition-colors">Partnerships</Link>
+                <Link to="/reviews" className="text-gray-400 hover:text-white transition-colors">Reviews</Link>
               </li>
             </ul>
           </div>
