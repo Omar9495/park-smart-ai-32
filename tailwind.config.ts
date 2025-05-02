@@ -64,13 +64,15 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				ipark: {
-					blue: '#1E40AF',
-					green: '#059669',
-					red: '#DC2626',
-					yellow: '#FBBF24',
-					accent: '#3B82F6',
-					light: '#F0F9FF',
-					dark: '#0F172A'
+					coral: '#F05454',
+					gold: '#D4AF37',
+					maroon: '#800020',
+					navy: '#121E31',
+					cream: '#F8F0E3',
+					black: '#222222',
+					white: '#FFFFFF',
+					light: '#F5F5F5',
+					dark: '#333333'
 				}
 			},
 			borderRadius: {
@@ -94,13 +96,18 @@ export default {
 				float: {
 					'0%, 100%': { transform: 'translateY(0)' },
 					'50%': { transform: 'translateY(-10px)' }
+				},
+				'shine': {
+					'from': { backgroundPosition: '200% 0' },
+					'to': { backgroundPosition: '-200% 0' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'pulse-slow': 'pulse 3s ease-in-out infinite',
-				'float': 'float 6s ease-in-out infinite'
+				'float': 'float 6s ease-in-out infinite',
+				'shine': 'shine 8s ease-in-out infinite'
 			}
 		}
 	},

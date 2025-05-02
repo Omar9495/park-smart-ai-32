@@ -12,39 +12,33 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full py-4 bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+    <nav className="w-full py-4 bg-white shadow-md fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-4 flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
-            <svg 
-              className="h-8 w-8 mr-2 text-ipark-blue" 
-              viewBox="0 0 24 24" 
-              fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M18 3v2h-2V3h2zm-2 6h2V7h-2v2zm0 4h2v-2h-2v2zm0 4h2v-2h-2v2zm-4-14v2h-2V3h2zm-2 6h2V7h-2v2zm0 4h2v-2h-2v2zm0 4h2v-2h-2v2zM6 3v2H4V3h2zM4 9h2V7H4v2zm0 4h2v-2H4v2zm0 4h2v-2H4v2zm14 2v2H2v-2h16z"/>
-            </svg>
-            <span className="text-ipark-dark text-xl font-bold">
-              <span className="text-ipark-blue">I</span>Park
-            </span>
+            <img 
+              src="/lovable-uploads/9d144a19-6e3a-46fd-a0b9-8d2b89f2e86c.png" 
+              alt="IPark Logo" 
+              className="h-12 w-auto mr-2" 
+            />
           </Link>
         </div>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-6">
-          <Link to="/" className="text-gray-700 hover:text-ipark-blue transition-colors font-medium">
+        <div className="hidden md:flex items-center space-x-8">
+          <Link to="/" className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium">
             Home
           </Link>
-          <Link to="/features" className="text-gray-700 hover:text-ipark-blue transition-colors font-medium">
+          <Link to="/features" className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium">
             Features
           </Link>
-          <Link to="/how-it-works" className="text-gray-700 hover:text-ipark-blue transition-colors font-medium">
+          <Link to="/how-it-works" className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium">
             How It Works
           </Link>
-          <Link to="/contact" className="text-gray-700 hover:text-ipark-blue transition-colors font-medium">
+          <Link to="/contact" className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium">
             Contact
           </Link>
-          <Button className="bg-ipark-blue hover:bg-blue-700 text-white">
+          <Button className="bg-ipark-gold hover:bg-ipark-maroon text-white border border-ipark-gold/50">
             Get Started
           </Button>
         </div>
@@ -68,33 +62,33 @@ const Navbar = () => {
           <div className="flex flex-col space-y-4 py-4 px-4">
             <Link 
               to="/" 
-              className="text-gray-700 hover:text-ipark-blue transition-colors font-medium py-2"
+              className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               Home
             </Link>
             <Link 
               to="/features" 
-              className="text-gray-700 hover:text-ipark-blue transition-colors font-medium py-2"
+              className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               Features
             </Link>
             <Link 
               to="/how-it-works" 
-              className="text-gray-700 hover:text-ipark-blue transition-colors font-medium py-2"
+              className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               How It Works
             </Link>
             <Link 
               to="/contact" 
-              className="text-gray-700 hover:text-ipark-blue transition-colors font-medium py-2"
+              className="text-ipark-navy hover:text-ipark-coral transition-colors font-medium py-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               Contact
             </Link>
-            <Button className="bg-ipark-blue hover:bg-blue-700 text-white">
+            <Button className="bg-ipark-gold hover:bg-ipark-maroon text-white border border-ipark-gold/50">
               Get Started
             </Button>
           </div>

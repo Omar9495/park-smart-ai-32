@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    --background: 210 50% 98%;
+    --background: 36 33% 97%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -14,10 +14,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 221 83% 53%;
+    --primary: 221 70% 20%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 42 80% 54%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
@@ -91,11 +91,35 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
+  html {
+    @apply scroll-smooth;
+  }
+
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-ipark-blue to-ipark-accent;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-ipark-coral to-ipark-maroon;
+  }
+  
+  .luxury-card {
+    @apply bg-white border border-ipark-gold/20 shadow-lg hover:shadow-xl transition-shadow duration-300;
+  }
+  
+  .luxury-border {
+    @apply border-2 border-ipark-gold/30;
+  }
+  
+  .luxury-bg {
+    @apply bg-gradient-to-br from-ipark-cream to-white;
+  }
+  
+  .luxury-button {
+    @apply bg-ipark-coral text-white hover:bg-ipark-maroon transition-colors duration-300;
+  }
+  
+  .shine-effect {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-shine before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent;
   }
 }
