@@ -1,7 +1,9 @@
 
 import { Button } from "@/components/ui/button";
 import { CarLocation } from "@/types/parking";
-import { Car, Route, MapPin } from 'lucide-react';
+import { Car, Route, MapPin, Navigation } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { toast } from 'sonner';
 
 interface CarLocatorProps {
   carLocation: CarLocation;
@@ -19,7 +21,16 @@ const CarLocator = ({
   
   const navigateToCar = () => {
     // In a real app, this would access the device's GPS and start navigation
-    alert("Starting navigation to your car's location: Level " + carLocation?.level + ", Space " + carLocation?.spotId);
+    toast.success(`Starting navigation to your car at Level ${carLocation?.level}, Space ${carLocation?.spotId}`, {
+      duration: 3000,
+    });
+    
+    // Simulate navigation experience
+    setTimeout(() => {
+      toast.info("GPS signal acquired. Follow the highlighted route.", {
+        duration: 4000,
+      });
+    }, 2000);
   };
   
   if (!carLocation) return null;
@@ -60,7 +71,7 @@ const CarLocator = ({
                 onClick={navigateToCar}
                 className="bg-ipark-gold hover:bg-ipark-gold/90 text-ipark-navy flex items-center gap-2 shine-effect"
               >
-                <Route className="h-5 w-5" />
+                <Navigation className="h-5 w-5" />
                 Navigate to Car
               </Button>
               <Button 
@@ -72,6 +83,21 @@ const CarLocator = ({
                 View Parking Map
               </Button>
             </div>
+          </div>
+          
+          <div className="mt-6 border-t border-gray-200 pt-4">
+            <h4 className="font-medium text-ipark-navy mb-2">Navigation Tips</h4>
+            <ul className="text-sm text-gray-600 space-y-1 list-disc pl-5">
+              <li>Follow the blue path on your screen to reach your vehicle</li>
+              <li>Use the "Flash Lights" feature to help locate your car in crowded areas</li>
+              <li>Save this location to favorites for future reference</li>
+            </ul>
+          </div>
+          
+          <div className="mt-4 flex justify-center">
+            <Link to="/find-vehicle" className="text-sm text-ipark-gold hover:underline">
+              Go to detailed vehicle finder
+            </Link>
           </div>
         </div>
       )}

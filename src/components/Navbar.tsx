@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Car, Info, Star, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -27,17 +27,26 @@ const Navbar = () => {
           <Link to="/" className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium">
             Home
           </Link>
-          <Link to="/features" className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium">
-            Features
+          <Link to="/info" className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium flex items-center gap-1">
+            <Info className="h-4 w-4" />
+            Information
           </Link>
-          <Link to="/how-it-works" className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium">
-            How It Works
+          <Link to="/parking" className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium flex items-center gap-1">
+            <MapPin className="h-4 w-4" />
+            Parking
           </Link>
-          <Link to="/contact" className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium">
-            Contact
+          <Link to="/find-vehicle" className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium flex items-center gap-1">
+            <Car className="h-4 w-4" />
+            Find Vehicle
           </Link>
-          <Button className="bg-ipark-gold hover:bg-ipark-maroon text-ipark-navy hover:text-white border border-ipark-gold/50">
-            Get Started
+          <Link to="/reviews" className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium flex items-center gap-1">
+            <Star className="h-4 w-4" />
+            Reviews
+          </Link>
+          <Button className="bg-ipark-gold hover:bg-ipark-maroon text-ipark-navy hover:text-white border border-ipark-gold/50" asChild>
+            <Link to="/parking">
+              Find Parking
+            </Link>
           </Button>
         </div>
 
@@ -66,28 +75,45 @@ const Navbar = () => {
               Home
             </Link>
             <Link 
-              to="/features" 
-              className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium py-2"
+              to="/info" 
+              className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium py-2 flex items-center gap-2"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Features
+              <Info className="h-4 w-4" />
+              Information
             </Link>
             <Link 
-              to="/how-it-works" 
-              className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium py-2"
+              to="/parking" 
+              className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium py-2 flex items-center gap-2"
               onClick={() => setMobileMenuOpen(false)}
             >
-              How It Works
+              <MapPin className="h-4 w-4" />
+              Parking
             </Link>
             <Link 
-              to="/contact" 
-              className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium py-2"
+              to="/find-vehicle" 
+              className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium py-2 flex items-center gap-2"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Contact
+              <Car className="h-4 w-4" />
+              Find Vehicle
             </Link>
-            <Button className="bg-ipark-gold hover:bg-ipark-maroon text-ipark-navy hover:text-white border border-ipark-gold/50">
-              Get Started
+            <Link 
+              to="/reviews" 
+              className="text-ipark-navy hover:text-ipark-gold transition-colors font-medium py-2 flex items-center gap-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <Star className="h-4 w-4" />
+              Reviews
+            </Link>
+            <Button 
+              className="bg-ipark-gold hover:bg-ipark-maroon text-ipark-navy hover:text-white border border-ipark-gold/50"
+              onClick={() => setMobileMenuOpen(false)}
+              asChild
+            >
+              <Link to="/parking">
+                Find Parking
+              </Link>
             </Button>
           </div>
         </div>
