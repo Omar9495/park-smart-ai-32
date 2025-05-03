@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,17 +10,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
             <Link to="/" className="flex items-center mb-6">
-              <svg 
-                className="h-8 w-8 mr-2 text-ipark-accent" 
-                viewBox="0 0 24 24" 
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M18 3v2h-2V3h2zm-2 6h2V7h-2v2zm0 4h2v-2h-2v2zm0 4h2v-2h-2v2zm-4-14v2h-2V3h2zm-2 6h2V7h-2v2zm0 4h2v-2h-2v2zm0 4h2v-2h-2v2zM6 3v2H4V3h2zM4 9h2V7H4v2zm0 4h2v-2H4v2zm0 4h2v-2H4v2zm14 2v2H2v-2h16z"/>
-              </svg>
-              <span className="text-white text-xl font-bold">
-                <span className="text-ipark-accent">I</span>Park
-              </span>
+              <img 
+                src="/lovable-uploads/90c25898-ecf8-47c3-a405-e704e9d160b4.png" 
+                alt="IPark Logo" 
+                className="h-10 mb-2"
+              />
             </Link>
             <p className="text-gray-400 mb-6">
               Revolutionizing urban parking with AI-powered solutions for a seamless, efficient experience.

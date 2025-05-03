@@ -52,7 +52,7 @@ const Hero = () => {
               {/* Logo in the center */}
               <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2/3">
                 <img 
-                  src="/lovable-uploads/9d144a19-6e3a-46fd-a0b9-8d2b89f2e86c.png"
+                  src="/lovable-uploads/90c25898-ecf8-47c3-a405-e704e9d160b4.png"
                   alt="IPark Logo"
                   className="w-full h-auto"
                 />

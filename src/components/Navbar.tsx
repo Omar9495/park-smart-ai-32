@@ -16,9 +16,11 @@ const Navbar = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
-            <span className="text-2xl font-bold text-ipark-navy">
-              <span className="text-ipark-gold">I</span>Park
-            </span>
+            <img 
+              src="/lovable-uploads/90c25898-ecf8-47c3-a405-e704e9d160b4.png" 
+              alt="IPark Logo" 
+              className="h-10"
+            />
           </Link>
         </div>
 
