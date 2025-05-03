@@ -1,14 +1,17 @@
+
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "sonner";
+import { ParkingSpot, CarLocation } from "@/types/parking";
+import { generateParkingSpots } from "@/utils/parkingUtils";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { useState, useEffect } from 'react';
-import { CarLocation, ParkingSpot } from '@/types/parking';
-import BookingSuccessToast from '@/components/BookingSuccessToast';
-import { generateParkingSpots } from '@/utils/parkingUtils';
-import ParkingCarousel from '@/components/parking/ParkingCarousel';
-import SpotDetails from '@/components/parking/SpotDetails';
+import ParkingCarousel from "@/components/parking/ParkingCarousel";
+import SpotDetails from "@/components/parking/SpotDetails";
+import CarLocator from "@/components/parking/CarLocator";
+import BookingSuccessToast from "@/components/BookingSuccessToast";
 import { Button } from "@/components/ui/button";
-import { XCircle } from "lucide-react";
-import { toast } from "sonner";
+import { CreditCard } from "lucide-react";
 
 const ParkingPage = () => {
   const [parkingSpots, setParkingSpots] = useState<ParkingSpot[]>(generateParkingSpots());
@@ -16,30 +19,21 @@ const ParkingPage = () => {
   const [selectedSpot, setSelectedSpot] = useState<ParkingSpot | null>(null);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [reservedSpotInfo, setReservedSpotInfo] = useState({ spotId: '', level: 0 });
-  const [hasReservation, setHasReservation] = useState(false);
+  const [showCarLocator, setShowCarLocator] = useState(false);
+  const [carLocation, setCarLocation] = useState<CarLocation>(null);
+  const navigate = useNavigate();
   
-  // Load reservation data from localStorage on component mount
+  // Load car location from localStorage on component mount
   useEffect(() => {
     const savedLocation = localStorage.getItem('carLocation');
     if (savedLocation) {
       try {
-        const location = JSON.parse(savedLocation);
+        const location = JSON.parse(savedLocation) as CarLocation;
+        setCarLocation(location);
         setReservedSpotInfo({
-          spotId: location.spotId,
-          level: location.level
+          spotId: location?.spotId || '',
+          level: location?.level || 0
         });
-        setHasReservation(true);
-        
-        // Update corresponding spot status to reserved
-        setParkingSpots(prevSpots =>
-          prevSpots.map(spot =>
-            (spot.number === location.spotId && spot.level === location.level)
-              ? { ...spot, status: 'reserved' }
-              : spot
-          )
-        );
-        
-        console.log('Loaded reservation from localStorage:', location);
       } catch (error) {
         console.error('Failed to parse car location from localStorage', error);
       }
@@ -62,117 +56,108 @@ const ParkingPage = () => {
       )
     );
     
-    // Show success toast
+    const newCarLocation: CarLocation = {
+      spotId: selectedSpot.number,
+      level: selectedSpot.level
+    };
+    
+    localStorage.setItem('carLocation', JSON.stringify(newCarLocation));
+    
     setReservedSpotInfo({
       spotId: selectedSpot.number,
       level: selectedSpot.level
     });
     setShowSuccessToast(true);
+    setCarLocation(newCarLocation);
     setSelectedSpot(null);
-    setHasReservation(true);
     
-    // Store the reservation in local storage
-    localStorage.setItem('carLocation', JSON.stringify({
-      spotId: selectedSpot.number,
-      level: selectedSpot.level
-    }));
-    
-    console.log('Saved car location to localStorage:', {
-      spotId: selectedSpot.number,
-      level: selectedSpot.level
-    });
-  };
-  
-  const handleCancelParking = () => {
-    // Find the reserved spot and make it available again
-    setParkingSpots(prevSpots =>
-      prevSpots.map(spot =>
-        spot.number === reservedSpotInfo.spotId && spot.level === reservedSpotInfo.level
-          ? { ...spot, status: 'available' }
-          : spot
-      )
-    );
-    
-    setHasReservation(false);
-    setReservedSpotInfo({ spotId: '', level: 0 });
-    
-    // Remove the car location from local storage
-    localStorage.removeItem('carLocation');
-    
-    // Show a toast notification
-    toast.success("Parking reservation canceled", {
-      description: "Your parking spot has been released",
-    });
-    
-    console.log('Removed car location from localStorage');
+    toast.success("Spot reserved successfully!");
   };
   
   const closeSuccessToast = () => {
     setShowSuccessToast(false);
   };
 
+  const toggleCarLocator = () => {
+    setShowCarLocator(!showCarLocator);
+  };
+
   const handleLevelSelect = (level: number) => {
     setActiveLevel(level);
   };
-  
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="pt-24 pb-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-ipark-gold to-ipark-maroon">
-                Find and Reserve Parking
-              </span>
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Browse available spaces across all levels and secure your spot in advance
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto">
-            {hasReservation && (
-              <div className="mb-8 p-4 bg-white rounded-lg border border-ipark-gold/30 shadow-md">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-lg font-medium text-ipark-navy">
-                      Current Reservation: <span className="font-bold">Level {reservedSpotInfo.level}, Spot {reservedSpotInfo.spotId}</span>
-                    </p>
-                    <p className="text-sm text-gray-500">Your vehicle's location has been saved</p>
-                  </div>
-                  <Button 
-                    variant="destructive" 
-                    onClick={handleCancelParking}
-                    className="bg-red-500 hover:bg-red-600 text-white"
-                  >
-                    <XCircle className="mr-2 h-4 w-4" />
-                    Cancel Parking
-                  </Button>
-                </div>
+      
+      <main className="flex-grow pt-20 pb-16">
+        <section className="py-12 bg-gradient-to-b from-ipark-cream to-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h1 className="text-4xl font-bold mb-4">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-ipark-gold to-ipark-maroon">
+                  Find and Reserve Parking
+                </span>
+              </h1>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
+                Browse available parking spots and make a reservation with our premium smart parking system.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Button
+                  className="bg-ipark-gold hover:bg-ipark-maroon text-ipark-navy hover:text-white"
+                  asChild
+                >
+                  <Link to="/find-vehicle">
+                    Find My Vehicle
+                  </Link>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="border-ipark-gold text-ipark-gold hover:bg-ipark-gold/10 flex items-center gap-2"
+                  asChild
+                >
+                  <Link to="/payment-methods">
+                    <CreditCard className="h-5 w-5" /> Manage Payment Methods
+                  </Link>
+                </Button>
               </div>
-            )}
+            </div>
             
-            {/* Parking Carousel Component */}
-            <ParkingCarousel 
-              parkingSpots={parkingSpots} 
-              activeLevel={activeLevel} 
-              selectedSpot={selectedSpot}
-              onSpotClick={handleSpotClick}
-              onLevelSelect={handleLevelSelect}
-            />
-            
-            {/* Spot Details Component */}
-            {selectedSpot && (
-              <SpotDetails 
-                selectedSpot={selectedSpot}
-                onReserve={handleReserveSpot}
-                onCancel={() => setSelectedSpot(null)}
+            <div className="max-w-4xl mx-auto">
+              {/* Car Locator Component */}
+              <CarLocator 
+                carLocation={carLocation} 
+                showCarLocator={showCarLocator} 
+                toggleCarLocator={toggleCarLocator}
+                setShowCarLocator={setShowCarLocator}
               />
-            )}
+              
+              {!showCarLocator && (
+                <>
+                  {/* Parking Carousel Component */}
+                  <ParkingCarousel 
+                    parkingSpots={parkingSpots} 
+                    activeLevel={activeLevel} 
+                    selectedSpot={selectedSpot}
+                    onSpotClick={handleSpotClick}
+                    onLevelSelect={handleLevelSelect}
+                  />
+                  
+                  {/* Spot Details Component */}
+                  {selectedSpot && (
+                    <SpotDetails 
+                      selectedSpot={selectedSpot}
+                      onReserve={handleReserveSpot}
+                      onCancel={() => setSelectedSpot(null)}
+                    />
+                  )}
+                </>
+              )}
+            </div>
           </div>
-        </div>
+        </section>
       </main>
+      
       <Footer />
       
       <BookingSuccessToast 

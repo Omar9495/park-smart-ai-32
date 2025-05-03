@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowRight, CreditCard } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const CTASection = () => {
   return (
@@ -27,15 +27,6 @@ const CTASection = () => {
             >
               <Link to="/parking">
                 Find Parking Now <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button 
-              variant="outline"
-              className="border-white text-white hover:bg-white/10 py-6 px-8 text-lg"
-              asChild
-            >
-              <Link to="/payment-methods">
-                <CreditCard className="mr-2 h-5 w-5" /> Manage Payment Methods
               </Link>
             </Button>
           </div>
